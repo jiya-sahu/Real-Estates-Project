@@ -1,13 +1,18 @@
 import React from 'react'
 import {BrowserRouter , Routes , Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Signout from './pages/Signout'
 import About from './pages/About'
 import Header from './components/Header'
+import Signin from './pages/Signin'
 function App() {
   return (
+    <>
+    <ToastContainer/>
    <BrowserRouter>
    <Header/>
    <Routes>
@@ -15,9 +20,11 @@ function App() {
     <Route path='/profile' element={<Profile/>}></Route>
     <Route path='/signup' element={<Signup/>}></Route>
     <Route path='/signout' element={<Signout/>}></Route>
+    <Route path='/signin' element={<Signin/>}></Route>
     <Route path='/about' element={<About/>}></Route>
    </Routes>
    </BrowserRouter>
+   </>
   )
 }
 

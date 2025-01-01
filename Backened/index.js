@@ -2,11 +2,12 @@ import express from 'express'
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
+import cors from 'cors';
 import mongoose from 'mongoose';
 import userroutes from './routes/user.routes.js'
 import authroutes from './routes/auth.routes.js'
 
-
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use((req, res, next) => {
@@ -24,9 +25,9 @@ mongoose.connect(process.env.DB_CONNECT).then(()=>{
 
 
 
-app.use('/user',userroutes);
+app.use('/api/user',userroutes);
 
-app.use('/signup',authroutes);
+app.use('/api/auth/signup',authroutes);
 
 app.use((err , req , res , next)=>{
     const statusCode = err.statusCode||500;
