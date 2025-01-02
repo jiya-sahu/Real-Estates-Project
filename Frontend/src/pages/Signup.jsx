@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 function Signup() {
+  const navigate = useNavigate();
   const[error , setError] = useState(null);
   const[loading , setLoading] = useState(false);
-
   const [formData , setFormData] = useState({ 
     username: '',
     password: '',
@@ -23,6 +23,7 @@ function Signup() {
     setLoading(true);
     e.preventDefault();
     try {
+
       const res = await fetch('/api/auth/signup',{
         method:'POST',
         headers : {
@@ -30,6 +31,8 @@ function Signup() {
          },
          body: JSON.stringify(formData),
        });
+
+
        const data = await res.json();
        if(data.success == false){
         setLoading(false);
@@ -37,14 +40,16 @@ function Signup() {
          toast.error(error);
          return ;
        }
+       console.log(data);
+       navigate('/signin');
+        
+    setLoading(false);
+    setError(null);
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
-    
-    console.log(data);
-    setLoading(false);
-    setError(null);
+   
   }
 
 
@@ -60,7 +65,7 @@ function Signup() {
      </form>
      <div className='flex gap-2 mt-5'>
       <p>Have an account?</p>
-      <Link to="/sign-in">
+      <Link to="/signin">
       <span className='text-blue-700'>Sign in</span>
       </Link>
      </div>
