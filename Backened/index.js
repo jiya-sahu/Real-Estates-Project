@@ -27,7 +27,7 @@ mongoose.connect(process.env.DB_CONNECT).then(()=>{
 
 app.use('/api/user',userroutes);
 
-app.use('/api/auth/signup',authroutes);
+app.use('/api/auth',authroutes);
 
 app.use((err , req , res , next)=>{
     const statusCode = err.statusCode||500;
