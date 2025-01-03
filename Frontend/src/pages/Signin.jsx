@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Link,useNavigate} from 'react-router-dom'
+import { data, Link,useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart ,signInSuccess,signInFailure} from '../redux/users/userSlice';
+
 function SignIn() {
   const navigate = useNavigate();
-  const[error , setError] = useState(null);
-  const[loading , setLoading] = useState(false);
+  const dispatch = useDispatch();
+ const {loading , error} = useSelector((state)=>state.user)
 
   const [formData , setFormData] = useState({ 
     password: '',
@@ -20,8 +23,8 @@ function SignIn() {
 
 
   const handleSubmit = async(e)=>{
-    setLoading(true);
     e.preventDefault();
+    dispatch(signInStart());
     try {
       
       const res = await fetch('/api/auth/signin',{
@@ -35,19 +38,17 @@ function SignIn() {
 
        const data = await res.json();
        if(data.success == false){
-        setLoading(false);
-         setError(data.message);
+        dispatch(signInFailure(data.message));
          toast.error(error);
          return ;
        }
-       console.log(data);
+       dispatch(signInSuccess(data));
        navigate('/');
         
     setLoading(false);
     setError(null);
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+     dispatch(signInFailure(data.message))
     }
    
   }
