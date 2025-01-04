@@ -3,6 +3,7 @@ import { data, Link,useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart ,signInSuccess,signInFailure} from '../redux/users/userSlice';
+import Oauth from '../components/Oauth';
 
 function SignIn() {
   const navigate = useNavigate();
@@ -44,11 +45,8 @@ function SignIn() {
        }
        dispatch(signInSuccess(data));
        navigate('/');
-        
-    setLoading(false);
-    setError(null);
     } catch (error) {
-     dispatch(signInFailure(data.message))
+     dispatch(signInFailure(error))
     }
    
   }
@@ -64,6 +62,7 @@ function SignIn() {
       <input type="email" placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={handleChange}/>
      <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'> 
       {loading ? 'Loading...' : ' Sign In'}</button>
+      <Oauth/>
      </form>
 
      <div className='flex gap-2 mt-5'>
