@@ -57,10 +57,10 @@ function Signup() {
     <div className='max-w-lg p-3 mx-auto'>
      <h1 className='text-3xl my-7 text-center font-semibold'>Sign Up</h1>
      <form className='flex flex-col' onSubmit={handleSubmit}>
-      <input type="text" placeholder='username' className='border p-3 rounded-lg focus:outline-none' id='username' onChange={handleChange}/>
+      <input type="text" placeholder='username' className='border p-3 my-2 rounded-lg focus:outline-none' id='username' onChange={handleChange}/>
       <input type="password" placeholder='password' className='border p-3 my-2 rounded-lg focus:outline-none' id='password' onChange={handleChange}/>
-      <input type="email" placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={handleChange}/>
-     <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'> 
+      <input type="email" placeholder='email' className='border p-3 my-2 rounded-lg focus:outline-none' id='email' onChange={handleChange}/>
+     <button disabled={loading} className='bg-slate-700 text-white p-3 mt-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'> 
       {loading ? 'Loading...' : ' Sign Up'}</button>
      </form>
      <div className='flex gap-2 mt-5'>

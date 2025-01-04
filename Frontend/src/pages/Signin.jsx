@@ -60,7 +60,7 @@ function SignIn() {
 
       <input type="password" placeholder='password' className='border p-3 my-2 rounded-lg focus:outline-none' id='password' onChange={handleChange}/>
       <input type="email" placeholder='email' className='border p-3 rounded-lg focus:outline-none' id='email' onChange={handleChange}/>
-     <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'> 
+     <button disabled={loading} className='bg-slate-700 text-white p-3 mt-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'> 
       {loading ? 'Loading...' : ' Sign In'}</button>
       <Oauth/>
      </form>
