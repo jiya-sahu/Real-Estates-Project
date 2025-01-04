@@ -9,6 +9,7 @@ import Signout from './pages/Signout'
 import About from './pages/About'
 import Header from './components/Header'
 import Signin from './pages/Signin'
+import Privateprofile from './components/Privateprofile';
 function App() {
   return (
     <>
@@ -17,7 +18,9 @@ function App() {
    <Header/>
    <Routes>
     <Route path='/' element={<Home/>}></Route>
+    <Route element={<Privateprofile/>}>
     <Route path='/profile' element={<Profile/>}></Route>
+    </Route>
     <Route path='/signup' element={<Signup/>}></Route>
     <Route path='/signout' element={<Signout/>}></Route>
     <Route path='/signin' element={<Signin/>}></Route>
