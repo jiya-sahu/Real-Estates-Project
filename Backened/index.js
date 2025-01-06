@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import userroutes from './routes/user.routes.js'
 import authroutes from './routes/auth.routes.js'
 import fileUpload from 'express-fileupload';
+import cookieParser from 'cookie-parser';
 
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json({ limit: "10mb" }));
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 app.use(fileUpload({
     useTempFiles:true
 }))
+app.use(cookieParser);
 
 mongoose.connect(process.env.DB_CONNECT).then(()=>{
     console.log("connected to db");
