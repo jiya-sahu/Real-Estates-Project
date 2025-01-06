@@ -2,6 +2,8 @@ import usermodel from "../models/user.model.js";
 import bcrypt from 'bcryptjs';
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
+import cloudinary from 'cloudinary'
+
 
 export const signup = async(req,res,next)=>{
     console.log(req.body);
@@ -70,4 +72,37 @@ export const googleauth = async(req,res,next)=>{
      } catch (error) {
         next(error);  
      }
+}
+
+cloudinary.config({
+     cloud_name: 'dbfjbwpne',
+     api_key: '391845517966613',
+     api_secret: '31-B3-a8-1uye9Bh7PBZum2es24'
+});
+
+
+
+export const uploadfile = async (req,res,next) => {
+     try {
+          const { file} = req.body;
+      
+          if (!file) {
+            return res.status(400).json({ message: "No file provided" });
+          }
+      
+          
+          const uploadResponse = await cloudinary.uploader.upload(file,(err,result)=>{
+               if(err)console.log(err);
+            
+               
+          });
+      
+          res.status(200).json({
+            secure_url: uploadResponse.secure_url,
+          });
+        } catch (error) {
+          console.error("Cloudinary Upload Error:", error);
+          res.status(500).json({ message: "Failed to upload file" });
+        }
+
 }
