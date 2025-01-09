@@ -84,8 +84,6 @@ cloudinary.config({
      api_secret: '31-B3-a8-1uye9Bh7PBZum2es24'
 });
 
-
-
 export const uploadfile = async (req,res,next) => {
      try {
           const { file} = req.body;
@@ -109,4 +107,13 @@ export const uploadfile = async (req,res,next) => {
           res.status(500).json({ message: "Failed to upload file" });
         }
 
+}
+
+export const signout = async (req,res,next) => {
+     try {
+         res.clearCookie('access_token');
+         res.status(200).json("User has been logged out") 
+     } catch (error) {
+          next(error);
+     }
 }
