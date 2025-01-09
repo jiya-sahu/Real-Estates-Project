@@ -7,13 +7,15 @@ export const usercontroller = (req, res) => {
 };
 
 export const updateUsercontroller= async(req,res,next)=>{
+   
+    
     if (req.user.id !== req.params.id) {
         return next(errorHandler(401,"You can only update your own account"))
     }
     try {
        if(req.body.password) {
         req.body.password = bcrypt.hashSync(req.body.password,10) 
-
+       }
         const updatedUser = await usermodel.findByIdAndUpdate(req.params.id,{
             $set:{
                username:req.body.username,
@@ -22,10 +24,24 @@ export const updateUsercontroller= async(req,res,next)=>{
                avatar : req.body.avatar 
             }
         },{new:true})
-       }
+       
        const {password , ...rest} = updatedUser._doc;
        res.status(200).json(rest)
     } catch (error) {
-        
+        next(error)
+    }
+}
+
+export const deleteuser = async (req,res,next) => {
+    if (req.user.id !== req.params.id) {
+        return next(errorHandler(401,"you can only delete your account"));
+    }
+    try {
+        await usermodel.findByIdAndDelete(req.params.id);
+        res.clearCookie('access_token');
+        res.status(200).json("user deleted successfully");
+
+    } catch (error) {
+        next(error);
     }
 }

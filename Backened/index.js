@@ -9,9 +9,12 @@ import authroutes from './routes/auth.routes.js'
 import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true,
+  }));
 app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true,limit: '10mb'}));
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -20,8 +23,15 @@ app.use((req, res, next) => {
 
 app.use(fileUpload({
     useTempFiles:true
-}))
-app.use(cookieParser);
+}));
+
+
+app.use(cookieParser());
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    next();
+  });
 
 mongoose.connect(process.env.DB_CONNECT).then(()=>{
     console.log("connected to db");
@@ -37,6 +47,8 @@ app.use('/api/user',userroutes);
 
 app.use('/api/auth',authroutes);
 
+
+
 app.use((err , req , res , next)=>{
     const statusCode = err.statusCode||500;
     const message = err.message||"Internal Server Error";
@@ -47,7 +59,7 @@ app.use((err , req , res , next)=>{
     });
 })
 
-app.listen(3000,()=>{
+app.listen(3000,'0.0.0.0',()=>{
     console.log("server started at port 3000");
     
 })

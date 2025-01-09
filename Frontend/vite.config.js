@@ -11,7 +11,6 @@ export default defineConfig({
         changeOrigin: true,
       },
       
-    }
-  },
+    }},
   plugins: [react()],
 })

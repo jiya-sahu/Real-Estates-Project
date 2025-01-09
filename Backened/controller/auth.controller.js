@@ -6,7 +6,10 @@ import cloudinary from 'cloudinary'
 
 
 export const signup = async(req,res,next)=>{
-    console.log(req.body);
+     console.log("request reached");
+     
+     console.log('Signup Request Body:', req.body);
+
     
    const {username,password,email} = req.body;
    const hashedpassword = bcrypt.hashSync(password,10);
@@ -17,6 +20,7 @@ export const signup = async(req,res,next)=>{
     await newuser.save();
     res.status(200).json("User Created Successfully");
    } catch (error) {
+     console.error(err);
         next(error);
    }
    

@@ -23,12 +23,14 @@ function Signup() {
     setLoading(true);
     e.preventDefault();
     try {
-
+      console.log("request send");
+      
       const res = await fetch('/api/auth/signup',{
         method:'POST',
         headers : {
          'Content-Type':'application/json',
          },
+         credentials: 'include',
          body: JSON.stringify(formData),
        });
 
