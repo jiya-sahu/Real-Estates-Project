@@ -8,6 +8,7 @@ import userroutes from './routes/user.routes.js'
 import authroutes from './routes/auth.routes.js'
 import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
+import listingroutes from './routes/listing.routes.js'
 
 app.use(cors({
     origin: 'http://localhost:5173', 
@@ -46,6 +47,8 @@ mongoose.connect(process.env.DB_CONNECT).then(()=>{
 app.use('/api/user',userroutes);
 
 app.use('/api/auth',authroutes);
+
+app.use('/api/listing',listingroutes);
 
 
 

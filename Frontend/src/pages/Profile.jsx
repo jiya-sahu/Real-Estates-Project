@@ -32,6 +32,8 @@ function Profile() {
     }
   }, [file]);
 
+
+  
   const handleUploadFile = async (file) => {
     if (!file) {
       console.error("No file selected!");
