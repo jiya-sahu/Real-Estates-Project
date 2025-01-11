@@ -37,7 +37,7 @@ const listingschema = new mongoose.Schema({
         type:Boolean,
         required:true
     },
-    types:{
+    type:{
         type:String,
         required:true
     },
