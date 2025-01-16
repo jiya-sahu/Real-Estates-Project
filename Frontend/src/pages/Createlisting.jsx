@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
-import axios from 'axios'
+import axios from "axios";
 
 function Createlisting() {
   const [files, setFiles] = useState([]);
@@ -12,7 +12,7 @@ function Createlisting() {
   // Initialize Cloudinary instance
   const cld = new Cloudinary({
     cloud: {
-      cloudName: "dbfjbwpne", 
+      cloudName: "dbfjbwpne", // Replace with your Cloudinary cloud name
     },
   });
 
@@ -34,11 +34,12 @@ function Createlisting() {
       setImageUploadError("You can only upload up to 6 images per listing.");
     }
   };
+
   const storeImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "my-cloudinary-preset"); // Replace with your upload preset
-  
+
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/dbfjbwpne/image/upload`,
@@ -47,11 +48,6 @@ function Createlisting() {
       return response.data.secure_url; // Return the URL of the uploaded image
     } catch (error) {
       console.error("Error uploading image:", error);
-      if (error.response) {
-        console.error("Response Data:", error.response.data);
-        console.error("Status Code:", error.response.status);
-        console.error("Headers:", error.response.headers);
-      }
       throw error;
     }
   };
@@ -166,7 +162,13 @@ function Createlisting() {
                     alt={`Uploaded ${index + 1}`}
                     className="w-40 h-40 object-cover rounded-lg"
                   />
-                  <button className="p-3 tezt-red-700 rounded-lg uppercase hover:opacity-95">Delete</button>
+                   <button
+                  type='button'
+                  onClick={() => handleRemoveImage(index)}
+                  className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
+                >
+                  Delete
+                </button>
                 </div>
               ))}
             </div>
