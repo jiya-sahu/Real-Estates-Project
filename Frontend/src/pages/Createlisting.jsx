@@ -34,12 +34,11 @@ function Createlisting() {
       setImageUploadError("You can only upload up to 6 images per listing.");
     }
   };
-
   const storeImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "your-upload-preset"); // Replace with your upload preset
-
+    formData.append("upload_preset", "my-cloudinary-preset"); // Replace with your upload preset
+  
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/dbfjbwpne/image/upload`,
@@ -48,6 +47,11 @@ function Createlisting() {
       return response.data.secure_url; // Return the URL of the uploaded image
     } catch (error) {
       console.error("Error uploading image:", error);
+      if (error.response) {
+        console.error("Response Data:", error.response.data);
+        console.error("Status Code:", error.response.status);
+        console.error("Headers:", error.response.headers);
+      }
       throw error;
     }
   };
