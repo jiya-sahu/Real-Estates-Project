@@ -8,6 +8,7 @@ function Createlisting() {
     imageUrls: [],
   });
   const [imageUploadError, setImageUploadError] = useState("");
+  const [uploading , setUploading] = useState(false);
 
   // Initialize Cloudinary instance
   const cld = new Cloudinary({
@@ -20,13 +21,17 @@ function Createlisting() {
     e.preventDefault();
     if (files.length > 0 && files.length + formData.imageUrls.length <= 6) {
       try {
+        setUploading(true);
+       
         const urls = await Promise.all(Array.from(files).map(storeImage));
         setFormData({
           ...formData,
           imageUrls: [...formData.imageUrls, ...urls],
         });
         setImageUploadError("");
+        setUploading(false);
       } catch (error) {
+        setUploading(false);
         setImageUploadError("Image Upload error. Please try again.");
         console.error(error);
       }
@@ -38,7 +43,7 @@ function Createlisting() {
   const storeImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "my-cloudinary-preset"); // Replace with your upload preset
+    formData.append("upload_preset", "my-cloudinary-preset"); 
 
     try {
       const response = await axios.post(
@@ -48,9 +53,18 @@ function Createlisting() {
       return response.data.secure_url; // Return the URL of the uploaded image
     } catch (error) {
       console.error("Error uploading image:", error);
+      setImageUploadError(error);
       throw error;
     }
   };
+
+  const handleRemoveImage = (index)=>{
+    setFormData({
+      ...formData,
+      imageUrls:formData.imageUrls.filter((_, i)=>i !==index)
+    })
+  }
+
 
   return (
     <main className="p-3 max-w-4xl mx-auto">
@@ -146,7 +160,7 @@ function Createlisting() {
               type="button"
               className="uppercase text-green-700 border p-3 border-green-700 rounded hover:shadow-lg"
             >
-              Upload
+             {uploading?'Uploading':'Upload'}
             </button>
           </div>
           <p className="text-red-700 text-sm">
