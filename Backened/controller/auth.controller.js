@@ -6,10 +6,7 @@ import cloudinary from 'cloudinary'
 
 
 export const signup = async(req,res,next)=>{
-     console.log("request reached");
-     
-     console.log('Signup Request Body:', req.body);
-
+    
     
    const {username,password,email} = req.body;
    const hashedpassword = bcrypt.hashSync(password,10);
