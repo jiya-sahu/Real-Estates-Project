@@ -19,7 +19,9 @@ function Profile() {
   const fileref = useRef(null);
   const [file, setFile] = useState(undefined);
   const [downloadURL, setDownloadURL] = useState("");
+  const [ShowListingsError , setShowListingsError] = useState(false);
   const [updatesuccess, setUpdatesuccess] = useState(false);
+  const [userlistings , setuserlistings] = useState([]);
   const [formdata, setFormData] = useState({
     username: "",
     password: "",
@@ -156,6 +158,21 @@ function Profile() {
     }
   }
 
+  const handleShowListings = async(req,res,next)=>{
+    try {
+      const res = await fetch(`/api/user/listing/${currentUser._id}`)
+      const data = await res.json();
+      if (data.success == false){
+        setShowListingsError(true);
+        return ;
+      }
+      setuserlistings(data);
+      
+    } catch (error) {
+      setShowListingsError(error);
+    }
+  }
+
   return currentUser ? (
     <div className="max-w-lg p-3 mx-auto">
       <h1 className="text-3xl my-7 text-center font-semibold">Profile</h1>
@@ -213,6 +230,36 @@ function Profile() {
       <p className="text-green-700 mt-5">
         {updatesuccess ? "User updated successfully" : ""}
       </p>
+      <button className="text-green-700 w-full"
+      onClick={handleShowListings}>
+        Show Listings
+      </button>
+      <p className="text-red-700 mt-2">{ShowListingsError? 'Error showing listings' :''}</p>
+      {
+      userlistings  && userlistings.length>0 && 
+      <div className="">
+        <h1 className="text-center mt-7 text-2xl font-semibold">
+          Your Listings 
+        </h1>
+       { userlistings.map((listing)=>(
+        <div key={listing._id}>
+        <div className="flex p-3 gap-4 rounded-lg border justify-between items-center"></div>
+       <Link to={`/listing/${listing._id}`}>
+       <img src={userlistings.imageUrls[0]} alt="listing-cover" className="h-16 w-16 object-contain rounded-lg"/>
+       </Link>
+       <Link to={`/listing/$(listing._id)`}className="text-slate-700 font-semibold flex-1 hover:underline truncate">
+       <p >{userlistings.name}</p>
+       </Link>
+
+       <div className="flex flex-col items-center">
+        <button className="text-red-700 uppercase">delete</button>
+        <button className="text-green-700 uppercase">edit</button>
+       </div>
+      </div>))}
+      </div>
+  
+     
+    }
     </div>
   ) : (
     <h2>Sign in to view this page</h2>
