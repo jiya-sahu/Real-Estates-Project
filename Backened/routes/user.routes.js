@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/test', usercontroller);
 router.post('/update/:id', verifyToken ,updateUsercontroller);
 router.delete('/delete/:id',verifyToken,deleteuser);
+router.get('/listing/:id',verifyToken,getUserListings)
 
 export default router;
