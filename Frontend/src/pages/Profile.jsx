@@ -126,7 +126,7 @@ function Profile() {
     }
   };
 
-  const handleDelete = async (req, res, next) => {
+  const handleDelete = async () => {
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser.id}`, {
@@ -143,7 +143,7 @@ function Profile() {
     }
   };
 
-  const handleSignout = async (req,res,next)=>{
+  const handleSignout = async ()=>{
     try {
       dispatch(signoutUserStart());
       const res = await fetch('/api/auth/signout');
@@ -158,7 +158,7 @@ function Profile() {
     }
   }
 
-  const handleShowListings = async(req,res,next)=>{
+  const handleShowListings = async()=>{
     try {
       const res = await fetch(`/api/user/listing/${currentUser._id}`)
       const data = await res.json();
@@ -173,6 +173,23 @@ function Profile() {
     }
   }
 
+  const handleDeletelisting= async(listingid)=>{
+    try {
+      const res = await fetch(`/api/listing/delete/${listingid}`,{
+        method:'DELETE',
+      })
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);return ;
+        
+      }
+      setuserlistings((prev)=>prev.filter((listing)=>listing._id !== listingid))
+
+    } catch (error) {
+     
+      
+    }
+  }
   return currentUser ? (
     <div className="max-w-lg p-3 mx-auto">
       <h1 className="text-3xl my-7 text-center font-semibold">Profile</h1>
@@ -242,17 +259,16 @@ function Profile() {
           Your Listings 
         </h1>
        { userlistings.map((listing)=>(
-        <div key={listing._id}>
-        <div className="flex p-3 gap-4 rounded-lg border justify-between items-center"></div>
+        <div key={listing._id}className="flex p-3 gap-4 rounded-lg border justify-between items-center">
        <Link to={`/listing/${listing._id}`}>
-       <img src={userlistings.imageUrls[0]} alt="listing-cover" className="h-16 w-16 object-contain rounded-lg"/>
+       <img src={listing.imageUrls[0]} alt="listing-cover" className="h-16 w-16 object-contain rounded-lg"/>
        </Link>
-       <Link to={`/listing/$(listing._id)`}className="text-slate-700 font-semibold flex-1 hover:underline truncate">
-       <p >{userlistings.name}</p>
+       <Link to={`/listing/${listing._id}`}className="text-slate-700 font-semibold flex-1 hover:underline truncate">
+       <p >{listing.name}</p>
        </Link>
 
        <div className="flex flex-col items-center">
-        <button className="text-red-700 uppercase">delete</button>
+        <button className="text-red-700 uppercase" onClick={()=>handleDeletelisting(listing._id)}>delete</button>
         <button className="text-green-700 uppercase">edit</button>
        </div>
       </div>))}

@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
 function Createlisting() {
-  const currentUser = useSelector((state) => state.user)
+  const {currentUser} = useSelector((state) => state.user)
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ function Createlisting() {
     bedrooms:1,
     bathrooms:1,
     regularPrice:0,
-    discountprice:0,
+    discountPrice:0,
     offer: false,
     parking:false,
     furnished:false,
@@ -103,6 +103,11 @@ function Createlisting() {
       })
       
     }
+
+
+    if (!currentUser?._id) {
+      return setError("User reference (userRef) is missing");
+    }
     
   }
 
@@ -110,7 +115,7 @@ function Createlisting() {
     e.preventDefault();
     try {
       if (formData.imageUrls.length <1)return setError("You must upload at least one image");
-      if (+formData.regularPrice < +formData.discountprice)
+      if (+formData.regularPrice < +formData.discountPrice)
         return setError('discount price ,ust be lesser than regular price');
      setLoading(true);
       const res = await fetch('/api/listing/create',{
@@ -130,7 +135,7 @@ function Createlisting() {
       setError(data.message);
      }
 
-    
+     navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error);
      
@@ -279,13 +284,13 @@ function Createlisting() {
               <div className='flex items-center gap-2'>
                 <input
                   type='number'
-                  id='discountprice'
+                  id='discountPrice'
                   min='0'
                   max='10000000'
                   required
                   className='p-3 border border-gray-300 rounded-lg'
                   onChange={handleChange}
-                  value={formData.discountprice}
+                  value={formData.discountPrice}
                 />
                 <div className='flex flex-col items-center'>
                   <p>Discounted price</p>
