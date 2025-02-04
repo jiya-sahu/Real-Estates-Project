@@ -190,6 +190,8 @@ function Profile() {
       
     }
   }
+
+  
   return currentUser ? (
     <div className="max-w-lg p-3 mx-auto">
       <h1 className="text-3xl my-7 text-center font-semibold">Profile</h1>
@@ -269,7 +271,10 @@ function Profile() {
 
        <div className="flex flex-col items-center">
         <button className="text-red-700 uppercase" onClick={()=>handleDeletelisting(listing._id)}>delete</button>
+        <Link to={`/updatelisting/${listing._id}`}>
         <button className="text-green-700 uppercase">edit</button>
+        </Link>
+        
        </div>
       </div>))}
       </div>
