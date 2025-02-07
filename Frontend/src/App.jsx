@@ -13,6 +13,8 @@ import Privateprofile from './components/Privateprofile';
 import Createlisting from './pages/Createlisting';
 import Updatelisting from './pages/Updatelisting';
 import Listing from './pages/Listing';
+import Search from './pages/Search';
+
 function App() {
   return (
     <>
@@ -26,6 +28,7 @@ function App() {
     <Route path='/createlisting' element={<Createlisting/>}></Route>
     <Route path='/updatelisting/:listingId' element={<Updatelisting/>}></Route>
     </Route>
+    <Route path='/search' element={<Search/>}></Route>
     <Route path='/listing/:listingId' element={<Listing/>}></Route>
     <Route path='/signup' element={<Signup/>}></Route>
     <Route path='/signout' element={<Signout/>}></Route>
