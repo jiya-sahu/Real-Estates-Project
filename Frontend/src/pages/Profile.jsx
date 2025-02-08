@@ -19,13 +19,15 @@ function Profile() {
   const fileref = useRef(null);
   const [file, setFile] = useState(undefined);
   const [downloadURL, setDownloadURL] = useState("");
-  const [ShowListingsError , setShowListingsError] = useState(false);
+  const [ShowListingsError , setShowListingsError] = useState('');
   const [updatesuccess, setUpdatesuccess] = useState(false);
   const [userlistings , setuserlistings] = useState([]);
   const [formdata, setFormData] = useState({
     username: "",
     password: "",
     email: "",
+    avatar:""
+   
   });
   const dispatch = useDispatch();
   console.log(file);
@@ -74,7 +76,7 @@ function Profile() {
       setDownloadURL(fileDownloadURL);
 
       // Update formdata with the URL
-      setFormData({ ...formdata, avatar: fileDownloadURL });
+      setFormData({ ...formdata, avatar: downloadURL });
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -103,7 +105,7 @@ function Profile() {
       dispatch(updateUserStart());
 
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
@@ -163,7 +165,7 @@ function Profile() {
       const res = await fetch(`/api/user/listing/${currentUser._id}`)
       const data = await res.json();
       if (data.success == false){
-        setShowListingsError(true);
+        setShowListingsError(data.message);
         return ;
       }
       setuserlistings(data);
@@ -253,7 +255,7 @@ function Profile() {
       onClick={handleShowListings}>
         Show Listings
       </button>
-      <p className="text-red-700 mt-2">{ShowListingsError? 'Error showing listings' :''}</p>
+      <p className="text-red-700 mt-2">{ShowListingsError? ShowListingsError :''}</p>
       {
       userlistings  && userlistings.length>0 && 
       <div className="">

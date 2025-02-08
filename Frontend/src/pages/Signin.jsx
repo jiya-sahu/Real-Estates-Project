@@ -47,6 +47,8 @@ function SignIn() {
        navigate('/');
     } catch (error) {
      dispatch(signInFailure(error))
+     console.log(error);
+     
     }
    
   }
