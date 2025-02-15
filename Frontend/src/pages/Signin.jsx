@@ -13,6 +13,7 @@ function SignIn() {
   const [formData , setFormData] = useState({ 
     password: '',
     email: '',});
+ 
 
   const handleChange = (e)=>{
     setFormData({
@@ -47,7 +48,7 @@ function SignIn() {
        navigate('/');
     } catch (error) {
      dispatch(signInFailure(error))
-     console.log(error);
+     
      
     }
    
@@ -73,6 +74,7 @@ function SignIn() {
       <span className='text-blue-700'>Sign up</span>
       </Link>
      </div>
+   
     </div>
   )
 }
