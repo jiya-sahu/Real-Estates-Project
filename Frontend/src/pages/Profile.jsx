@@ -77,6 +77,7 @@ function Profile() {
 
       // Update formdata with the URL
       setFormData({ ...formdata, avatar: downloadURL });
+      dispatch(updateUserSuccess({ ...currentUser, avatar: fileDownloadURL }));
     } catch (error) {
       console.error("Error uploading file:", error);
     }
