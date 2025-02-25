@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
 import userroutes from './routes/user.routes.js'
 import authroutes from './routes/auth.routes.js'
 import fileUpload from 'express-fileupload';
@@ -42,6 +43,7 @@ mongoose.connect(process.env.DB_CONNECT).then(()=>{
     
 });
 
+const __dirname = path.resolve();
 
 
 app.use('/api/user',userroutes);
@@ -50,7 +52,12 @@ app.use('/api/auth',authroutes);
 
 app.use('/api/listing',listingroutes);
 
+app.use(express.static(path.join(__dirname, '/Frontend/dist')));
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Frontend', 'dist', 'index.html'));
+  })
+  
 
 app.use((err , req , res , next)=>{
     const statusCode = err.statusCode||500;
