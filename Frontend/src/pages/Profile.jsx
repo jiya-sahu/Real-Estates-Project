@@ -12,7 +12,7 @@ import {
   signoutUserfailure,
 } from "../redux/users/userSlice";
 import { Link } from "react-router-dom";
-import Createlisting from "./createlisting";
+
 
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
