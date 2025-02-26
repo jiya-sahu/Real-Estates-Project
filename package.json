@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon Backened/index.js",
-    "start": "node Backened/index.js",
+    "start": "cd backend && node index.js",
+    "server": "cd backend && npm start",
     "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend"
   },
   "keywords": [],
