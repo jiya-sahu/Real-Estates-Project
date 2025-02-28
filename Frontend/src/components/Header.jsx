@@ -72,6 +72,11 @@ function Header() {
           <Link to="/about">
             <li className="text-slate-700 hover:underline">About</li>
           </Link>
+          <Link to="/signin" onClick={() => setMenuOpen(false)}>
+            <li className="text-slate-700 hover:underline">
+              Signin
+            </li>
+          </Link>
           
           <Link to="/profile">
             {currentUser && currentUser.avatar ? (
@@ -81,8 +86,8 @@ function Header() {
                 alt="profile"
               />
             ) : (
-              <Link to={"/signin"}>
-                   <li className="text-slate-700 hover:underline">Sign in</li>
+              <Link to={"/signup"}>
+                   <li className="text-slate-700 hover:underline">Sign up</li>
               </Link>
            
             )}
@@ -98,6 +103,11 @@ function Header() {
           </Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>
             <li className="text-slate-700 hover:underline">About</li>
+          </Link>
+          <Link to="/signin" onClick={() => setMenuOpen(false)}>
+            <li className="text-slate-700 hover:underline">
+              Signin
+            </li>
           </Link>
          
           <Link to="/profile" onClick={() => setMenuOpen(false)}>

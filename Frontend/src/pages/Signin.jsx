@@ -74,7 +74,7 @@ function SignIn() {
       <span className='text-blue-700'>Sign up</span>
       </Link>
      </div>
-   
+    <p className='text-red-700 mt-3'>{error ? error:''}</p>
     </div>
   )
 }
