@@ -252,11 +252,12 @@ function Profile() {
       <p className="text-green-700 mt-5">
         {updatesuccess ? "User updated successfully" : ""}
       </p>
-      <button className="text-green-700 w-full"
+      <button  className="text-green-700 w-full"
       onClick={handleShowListings}>
         Show Listings
       </button>
       <p className="text-red-700 mt-2">{ShowListingsError? ShowListingsError :''}</p>
+     
       {
       userlistings  && userlistings.length>0 && 
       <div className="">
