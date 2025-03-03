@@ -30,8 +30,10 @@ app.use(fileUpload({
 
 app.use(cookieParser());
 app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'credentialless');
     next();
   });
 
@@ -58,11 +60,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'Frontend', 'dist', 'index.html'));
   })
 
-app.use((req, res, next) => {
-    res.setHeader("Cross-Origin-Embedder-Policy", "credentialless");
-    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-    next();
-  });
 
 app.use((err , req , res , next)=>{
     const statusCode = err.statusCode||500;
